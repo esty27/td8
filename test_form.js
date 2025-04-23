@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 
 fixture `Test Formulaire PHP`
-    .page `http://localhost/form.php`;
+    .page `http://localhost:8000/form.php`;
 
 test('Vérification que le nom est bien en majuscules après soumission', async t => {
     const nomInput = Selector('#nom');
