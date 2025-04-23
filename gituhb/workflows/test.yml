@@ -3,7 +3,7 @@ name: TestCafe Tests
 on:
   push:
     branches:
-      - main # ou la branche où tu veux exécuter les tests
+      - master # ou la branche où tu veux exécuter les tests
   pull_request:
     branches:
       - main # ou la branche où tu veux exécuter les tests
