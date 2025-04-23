@@ -1,29 +1,18 @@
 import { Selector } from 'testcafe';
 
-fixture `Test du formulaire PHP`
-    .page `http://localhost:8000/form.php`; // Utilise host.docker.internal pour Docker
+fixture `Test Formulaire PHP`
+    .page `http://localhost/form.php`;
 
-test('Vérifier la visibilité du formulaire et soumettre', async t => {
-    const inputNom = Selector('input[name="nom"]');
-    const bouton = Selector('button').withText('Enregistrer');
-    const titre = Selector('h1');
+test('Vérification que le nom est bien en majuscules après soumission', async t => {
+    const nomInput = Selector('#nom');
+    const submitButton = Selector('button');
+    const resultText = Selector('p');
 
-    // Vérifier que le champ de saisie du nom est visible
+    // Saisie d'un nom
     await t
-        .expect(inputNom.exists).ok('Le champ de saisie du nom n\'existe pas')
-        .expect(inputNom.visible).ok('Le champ de saisie du nom n\'est pas visible');
+        .typeText(nomInput, 'jean')
+        .click(submitButton);
 
-    // Vérifier que le bouton est visible
-    await t
-        .expect(bouton.exists).ok('Le bouton n\'existe pas')
-        .expect(bouton.visible).ok('Le bouton n\'est pas visible');
-
-    // Remplir le champ et soumettre le formulaire
-    await t
-        .typeText(inputNom, 'Alice')
-        .click(bouton);
-
-    // Vérifier que le titre a été mis à jour après soumission
-    await t
-        .expect(titre.innerText).eql('Nom Saisi : ALICE');
+    // Vérifier que le nom est bien affiché en majuscules
+    await t.expect(resultText.innerText).eql('Nom soumis : JEAN');
 });
