@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 
 fixture `Test du formulaire PHP`
-    .page `http://host.docker.internal:8000/form.php`; // Utilise host.docker.internal pour Docker
+    .page `http://localhost:8000/form.php`; // Utilise host.docker.internal pour Docker
 
 test('Vérifier la visibilité du formulaire et soumettre', async t => {
     const inputNom = Selector('input[name="nom"]');
