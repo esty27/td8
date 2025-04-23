@@ -1,0 +1,29 @@
+name: TestCafe Tests
+
+on:
+  push:
+    branches:
+      - main # ou la branche où tu veux exécuter les tests
+  pull_request:
+    branches:
+      - main # ou la branche où tu veux exécuter les tests
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Utilise la dernière version stable d'Ubuntu pour ton environnement
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Clone ton repo
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'  # Tu peux ajuster la version de Node.js si nécessaire
+
+    - name: Install dependencies
+      run: |
+        npm install  # Installe les dépendances, y compris TestCafe
+
+    - name: Run TestCafe tests with Firefox headless
+      run: |
+        npx testcafe firefox --headless form.test.js  # Lance TestCafe avec Firefox en mode headless
