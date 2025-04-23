@@ -39,4 +39,4 @@ jobs:
       # Étape 6 : Exécuter les tests TestCafe
       - name: Run TestCafe tests
         run: |
-          testcafe chrome testcafe_test.js
+          testcafe "firefox:headless" testcafe_test.js
