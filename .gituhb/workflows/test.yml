@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - master # ou la branche où tu veux exécuter les tests
-  pull_request:
-    branches:
-      - main # ou la branche où tu veux exécuter les tests
-
+  
 jobs:
   test:
     runs-on: ubuntu-latest  # Utilise la dernière version stable d'Ubuntu pour ton environnement
