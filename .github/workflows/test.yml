@@ -1,26 +1,42 @@
-name: TestCafe Tests
+name: Test Formulaire PHP
 
 on:
   push:
     branches:
-      - master # ou la branche où tu veux exécuter les tests
-  
+      - master
+
 jobs:
   test:
-    runs-on: ubuntu-latest  # Utilise la dernière version stable d'Ubuntu pour ton environnement
+    runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2  # Clone ton repo
+      # Étape 1 : Checkout le code source
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'  # Tu peux ajuster la version de Node.js si nécessaire
+      # Étape 2 : Installer PHP
+      - name: Install PHP
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php-cli
 
-    - name: Install dependencies
-      run: |
-        npm install  # Installe les dépendances, y compris TestCafe
+      # Étape 3 : Démarrer le serveur PHP
+      - name: Start PHP server
+        run: |
+          php -S 0.0.0.0:8000 -t . &  # Lancer le serveur PHP en arrière-plan
+          sleep 5  # Attendre 5 secondes que le serveur démarre
 
-    - name: Run TestCafe tests with Firefox headless
-      run: |
-        npx testcafe "firefox:headless" test_form.js  # Lance TestCafe avec Firefox en mode headless
+      # Étape 4 : Vérifier que le formulaire est accessible
+      - name: Test if form is accessible
+        run: |
+          curl --fail http://localhost:8000/form.php  # Vérifier si la page est accessible
+          
+      # Étape 5 : Installer TestCafe
+      - name: Install TestCafe
+        run: |
+          npm install -g testcafe
+
+      # Étape 6 : Exécuter les tests TestCafe
+      - name: Run TestCafe tests
+        run: |
+          testcafe chrome testcafe_test.js
